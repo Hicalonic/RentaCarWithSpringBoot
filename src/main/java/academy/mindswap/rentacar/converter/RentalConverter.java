@@ -6,23 +6,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class RentalConverter {
 
-    public RentalDto fromCarEntityToCarDto(Rental rental) {
+    public RentalDto fromRentalEntityToRentalDto(Rental rental) {
         return RentalDto.builder()
                 .id(rental.getId())
                 .rentalDate(rental.getRentalDate())
                 .deliveryDate(rental.getDeliveryDate())
-                .car(rental.getCar())
-                .user(rental.getUser())
+                .carId(rental.getCarId())
+                .userId(rental.getUserId())
                 .build();
     }
 
-    public Rental fromCarDtoToEntity(RentalDto rentalDto) {
+    public Rental fromRentalDtoToEntity(RentalDto rentalDto) {
         return Rental.builder()
                 .id(rentalDto.getId())
                 .rentalDate(rentalDto.getRentalDate())
                 .deliveryDate(rentalDto.getDeliveryDate())
-                .car(rentalDto.getCar())
-                .user(rentalDto.getUser())
+                .carId(rentalDto.getCarId())
+                .userId(rentalDto.getUserId())
                 .build();
     }
 

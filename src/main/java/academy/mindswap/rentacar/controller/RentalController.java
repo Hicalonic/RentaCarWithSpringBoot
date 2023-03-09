@@ -41,7 +41,6 @@ public class RentalController {
 
         return new ResponseEntity<>(savedRentalDto, HttpStatus.OK);
     }
-
 }
 
 

@@ -22,11 +22,10 @@ public class Rental {
     @Column(nullable = false)
     private LocalDate deliveryDate;
     @ManyToOne
-    @JoinColumn(name = "car_id")
-    private Car car;
+    private Long carId;
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+//    @JoinColumn(name = "user_id")
+    private Long userId;
 
 
 }

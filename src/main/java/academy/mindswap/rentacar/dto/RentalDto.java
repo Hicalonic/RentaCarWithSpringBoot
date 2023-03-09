@@ -25,7 +25,7 @@ public class RentalDto {
     @NotNull
     private LocalDate deliveryDate;
     @NotNull
-    private Car car;
+    private Long carId;
     @NotNull
-    private User user;
+    private Long userId;
 }
