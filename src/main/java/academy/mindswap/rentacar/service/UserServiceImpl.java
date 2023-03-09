@@ -7,9 +7,7 @@ import academy.mindswap.rentacar.dto.UserDto;
 import academy.mindswap.rentacar.dto.UserUpdateDto;
 import academy.mindswap.rentacar.model.User;
 import academy.mindswap.rentacar.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

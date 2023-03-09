@@ -1,6 +1,7 @@
 package academy.mindswap.rentacar.converter;
 
 import academy.mindswap.rentacar.dto.CarDto;
+import academy.mindswap.rentacar.dto.CarUpdateDto;
 import academy.mindswap.rentacar.dto.UserCreateDto;
 import academy.mindswap.rentacar.dto.UserDto;
 import academy.mindswap.rentacar.model.Car;
@@ -12,6 +13,7 @@ public class CarConverter {
 
     public CarDto fromCarEntityToCarDto(Car car) {
         return CarDto.builder()
+                .id(car.getId())
                 .brand(car.getBrand())
                 .model(car.getModel())
                 .costPerHour(car.getCostPerHour())
@@ -22,6 +24,7 @@ public class CarConverter {
 
     public  Car fromCarDtoToCarEntity(CarDto carDto) {
        return Car.builder()
+                .id(carDto.getId())
                 .brand(carDto.getBrand())
                 .model(carDto.getModel())
                 .costPerHour(carDto.getCostPerHour())
@@ -37,6 +40,16 @@ public class CarConverter {
                 .costPerHour(carDto.getCostPerHour())
                 .licensePlate(carDto.getLicensePlate())
                 .manufacturingYear(carDto.getManufacturingYear())
+                .build();
+    }
+
+    public Car fromCarUpdaterDtoToEntity (CarUpdateDto carUpdateDto){
+        return Car.builder()
+                .brand(carUpdateDto.getBrand())
+                .model(carUpdateDto.getModel())
+                .costPerHour(carUpdateDto.getCostPerHour())
+                .licensePlate(carUpdateDto.getLicensePlate())
+                .manufacturingYear(carUpdateDto.getManufacturingYear())
                 .build();
     }
 }

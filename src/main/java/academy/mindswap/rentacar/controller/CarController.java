@@ -1,7 +1,7 @@
 package academy.mindswap.rentacar.controller;
 
 import academy.mindswap.rentacar.dto.CarDto;
-import academy.mindswap.rentacar.model.Car;
+import academy.mindswap.rentacar.dto.CarUpdateDto;
 import academy.mindswap.rentacar.service.CarService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +24,13 @@ public class CarController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Car>> getCars() {
-        List<Car> cars = carService.getAllCars();
-        return new ResponseEntity<>(cars, HttpStatus.OK);
+    public ResponseEntity<List<CarDto>> getCars() {
+        return new ResponseEntity<>(carService.getAllCars(), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "{carID}")
+    public ResponseEntity<CarDto> getCarById(@PathVariable("carID") Long id) {
+        return new ResponseEntity<>(carService.getCarById(id), HttpStatus.OK);
     }
 
 
@@ -41,20 +45,17 @@ public class CarController {
             }
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-               carService.createCar(carDto);
-        return new ResponseEntity<>(carDto, HttpStatus.CREATED);
+             CarDto carDto1 = carService.createCar(carDto);
+        return new ResponseEntity<>(carDto1, HttpStatus.CREATED);
     }
 
-    @GetMapping(path = "{carID}")
-    public ResponseEntity<Car> getCarById(@PathVariable("carID") Long id) {
-        return new ResponseEntity<>(carService.getCarById(id), HttpStatus.OK);
-    }
+
 
     @PutMapping(path = "{carId}")
-    public  ResponseEntity<String> updateCar(@PathVariable("carId") Long id, @RequestBody CarDto carDto) {
-        carDto.setId(id);
-        carService.updateCar(carDto);
-        return new ResponseEntity<>("Update Success", HttpStatus.OK) ;
+    public  ResponseEntity<CarDto> updateCar(@PathVariable("carId") Long id, @RequestBody CarUpdateDto carUpdateDto) {
+        carUpdateDto.setId(id);
+      CarDto carDto =  carService.updateCar(carUpdateDto);
+        return new ResponseEntity<>(carDto, HttpStatus.OK) ;
     }
 
     @DeleteMapping(path = "{carID}")

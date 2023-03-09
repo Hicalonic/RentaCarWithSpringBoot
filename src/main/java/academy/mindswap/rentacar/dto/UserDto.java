@@ -1,6 +1,7 @@
 package academy.mindswap.rentacar.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
@@ -11,7 +12,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
-
+    @NotNull
+    private Long id;
     @NotBlank(message = "Must have a first name")
     private String firstName;
     @NotBlank(message = "Must have a last name")

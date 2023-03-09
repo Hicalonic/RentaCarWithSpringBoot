@@ -2,6 +2,7 @@ package academy.mindswap.rentacar.service;
 
 import academy.mindswap.rentacar.converter.CarConverter;
 import academy.mindswap.rentacar.dto.CarDto;
+import academy.mindswap.rentacar.dto.CarUpdateDto;
 import academy.mindswap.rentacar.model.Car;
 import academy.mindswap.rentacar.repository.CarRepository;
 import jakarta.transaction.Transactional;
@@ -27,42 +28,42 @@ public class CarServiceImpl implements CarService {
 
 
     @Override
-    public Car createCar(CarDto carDto) {
+    public CarDto createCar(CarDto carDto) {
        Car car =  carConverter.fromCarDtoToCarEntity(carDto);
        carRepository.save(car);
-       return car;
+
+       return carConverter.fromCarEntityToCarDto(car);
     }
 
     @Override
-    public Car getCarById(Long carId) {
-        return carRepository.findById(carId).orElseThrow(() -> new IllegalStateException("car Id doesn't exist"));
+    public CarDto getCarById(Long carId) {
+        Car car = carRepository.getReferenceById(carId);
+        return carConverter.fromCarEntityToCarDto(car);
     }
 
 
 
     @Override
-    public List<Car> getAllCars() {
-        return carRepository.findAll();
+    public List<CarDto> getAllCars() {
+        List<Car> carsList = carRepository.findAll();
+        List<CarDto> carsDtos = carsList.stream()
+                .map(car -> carConverter.fromCarEntityToCarDto(car))
+                .toList();
+        return carsDtos;
     }
 
 
     @Transactional
     @Override
-    public CarDto updateCar(CarDto carDto) {
-
-
-
-
-return null;
-
-//     Car carToUpdate = carConverter.fromCarDtoToCarEntity(carDto);
-//     carToUpdate.setId(carDto.getId());
-//     carToUpdate.setBrand(carDto.getBrand());
-//     carToUpdate.setModel(carDto.getModel());
-//     carToUpdate.setLicensePlate(carDto.getLicensePlate());
-//     carToUpdate.setManufacturingYear(carDto.getManufacturingYear());
-//     carToUpdate.setCostPerHour(carDto.getCostPerHour());
-//     return carConverter.fromCarEntityToCarDto(carToUpdate);
+    public CarDto updateCar(CarUpdateDto carUpdateDto) {
+     Car carToUpdate = carRepository.getReferenceById(carUpdateDto.getId());
+     carToUpdate.setId(carUpdateDto.getId());
+     carToUpdate.setBrand(carUpdateDto.getBrand());
+     carToUpdate.setModel(carUpdateDto.getModel());
+     carToUpdate.setLicensePlate(carUpdateDto.getLicensePlate());
+     carToUpdate.setManufacturingYear(carUpdateDto.getManufacturingYear());
+     carToUpdate.setCostPerHour(carUpdateDto.getCostPerHour());
+     return carConverter.fromCarEntityToCarDto(carToUpdate);
     }
 
     @Override

@@ -6,7 +6,6 @@ package academy.mindswap.rentacar.controller;
 import academy.mindswap.rentacar.dto.UserCreateDto;
 import academy.mindswap.rentacar.dto.UserDto;
 import academy.mindswap.rentacar.dto.UserUpdateDto;
-import academy.mindswap.rentacar.model.User;
 import academy.mindswap.rentacar.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

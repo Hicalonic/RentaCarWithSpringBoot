@@ -3,6 +3,8 @@ package academy.mindswap.rentacar.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -25,5 +27,9 @@ public class User {
     private String role;
     @Column(nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "users")
+    private List<Rental> rentalList;
+
 
 }

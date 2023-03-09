@@ -11,6 +11,7 @@ public class UserConverter {
 
     public UserDto fromUserEntityToUserDto(User user) {
         return UserDto.builder()
+                .id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())
@@ -20,6 +21,7 @@ public class UserConverter {
 
     public  User fromUserDtoToUserEntity(UserDto userDto) {
         return User.builder()
+                .id(userDto.getId())
                 .firstName(userDto.getFirstName())
                 .lastName(userDto.getLastName())
                 .email(userDto.getEmail())
