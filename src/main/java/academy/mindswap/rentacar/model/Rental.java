@@ -18,13 +18,14 @@ public class Rental {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private LocalDate rentalDate;
+    private String rentalDate;
     @Column(nullable = false)
-    private LocalDate deliveryDate;
-    @ManyToOne
+    private String deliveryDate;
+    @ManyToOne(targetEntity = Car.class)
+    @JoinColumn(name = "car_id")
     private Long carId;
-    @ManyToOne
-//    @JoinColumn(name = "user_id")
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "user_id")
     private Long userId;
 
 

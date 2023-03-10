@@ -17,13 +17,12 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class RentalDto {
 
-    @Id
     @NotNull
     private Long id;
     @NotNull
-    private LocalDate rentalDate;
+    private String rentalDate;
     @NotNull
-    private LocalDate deliveryDate;
+    private String deliveryDate;
     @NotNull
     private Long carId;
     @NotNull

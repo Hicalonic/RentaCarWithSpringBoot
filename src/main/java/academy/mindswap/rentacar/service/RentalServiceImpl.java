@@ -11,9 +11,12 @@ import academy.mindswap.rentacar.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+@Service
 public class RentalServiceImpl implements RentalService {
 
     private RentalConverter rentalConverter;
@@ -28,17 +31,17 @@ public class RentalServiceImpl implements RentalService {
         this.carRepository = carRepository;
         this.userRepository = userRepository;
     }
+
     @Override
     public RentalDto createRental(RentalDto rentalDto) {
         carRepository.findById(rentalDto.getCarId()).orElseThrow(() -> new EntityNotFoundException("Car not found with id: " + rentalDto.getCarId()));
         userRepository.findById(rentalDto.getUserId()).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + rentalDto.getUserId()));
 
         Rental rental = rentalConverter.fromRentalDtoToEntity(rentalDto);
-        rental.setCarId(rentalDto.getId());
-        rental.setUserId(rentalDto.getId());
-
         Car carChoosen = carRepository.getReferenceById(rentalDto.getCarId());
         User userChoosen = userRepository.getReferenceById(rentalDto.getUserId());
+        rental.setCarId(carChoosen.getId());
+        rental.setUserId(userChoosen.getId());
         carChoosen.getRentalList().add(rental);
         userChoosen.getRentalList().add(rental);
 

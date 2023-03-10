@@ -28,7 +28,7 @@ public class Car {
     @Column(nullable = false)
     private Integer manufacturingYear;
 
-    @OneToMany(mappedBy = "cars")
+    @OneToMany
     private List<Rental> rentalList;
 
 

@@ -27,7 +27,10 @@ public class RentalController {
 
 
     @PostMapping
-    public ResponseEntity<RentalDto> createRental(@Valid @RequestBody RentalDto rentalDto, BindingResult bindingResult) {
+    public ResponseEntity<RentalDto> createRental( @RequestBody RentalDto rentalDto, BindingResult bindingResult) {
+        System.out.println(rentalDto.getId());
+        System.out.println(rentalDto.getUserId());
+        System.out.println(rentalDto.getCarId());
         if(bindingResult.hasErrors()) {
 
             List<FieldError> errors = bindingResult.getFieldErrors();
