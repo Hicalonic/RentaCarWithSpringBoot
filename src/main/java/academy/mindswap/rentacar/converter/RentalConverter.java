@@ -22,5 +22,6 @@ public class RentalConverter {
                 .rentalDate(rentalDto.getRentalDate())
                 .deliveryDate(rentalDto.getDeliveryDate())
                 .build();
+
     }
 }

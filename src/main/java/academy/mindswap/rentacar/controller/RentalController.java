@@ -1,10 +1,8 @@
 package academy.mindswap.rentacar.controller;
 
+import academy.mindswap.rentacar.dto.CarDto;
 import academy.mindswap.rentacar.dto.RentalDto;
-import academy.mindswap.rentacar.dto.UserCreateDto;
-import academy.mindswap.rentacar.dto.UserDto;
 import academy.mindswap.rentacar.service.RentalService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +26,7 @@ public class RentalController {
 
     @PostMapping
     public ResponseEntity<RentalDto> createRental( @RequestBody RentalDto rentalDto, BindingResult bindingResult) {
-        System.out.println(rentalDto.getId());
-        System.out.println(rentalDto.getUserId());
-        System.out.println(rentalDto.getCarId());
+
         if(bindingResult.hasErrors()) {
 
             List<FieldError> errors = bindingResult.getFieldErrors();
@@ -43,6 +39,30 @@ public class RentalController {
         RentalDto savedRentalDto = rentalService.createRental(rentalDto);
 
         return new ResponseEntity<>(savedRentalDto, HttpStatus.OK);
+    }
+
+      @GetMapping("")
+        public ResponseEntity<List<RentalDto>> getRentals() {
+
+        return new ResponseEntity<>(rentalService.getAllRentals(), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "{rentalID}")
+    public ResponseEntity<RentalDto> getRentalById(@PathVariable("rentalID") Long id) {
+        return new ResponseEntity<>(rentalService.getRentalById(id), HttpStatus.OK);
+    }
+
+    @PutMapping(path = "{rentalID}")
+    public ResponseEntity<RentalDto> updateRental(@PathVariable("rentalID") Long id,  @RequestBody RentalDto rentalDto) {
+        rentalDto.setId(id);
+        RentalDto rentalDto1 =  rentalService.updateRental(rentalDto);
+        return new ResponseEntity<>(rentalDto1, HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "{rentalID}")
+    public ResponseEntity<String> deleteRental(@PathVariable("rentalID") Long id) {
+        rentalService.deleteRental(id);
+        return new ResponseEntity<>("Rental has been deleted",HttpStatus.OK);
     }
 }
 

@@ -1,6 +1,8 @@
 package academy.mindswap.rentacar.service;
 
 import academy.mindswap.rentacar.converter.RentalConverter;
+import academy.mindswap.rentacar.dto.CarDto;
+import academy.mindswap.rentacar.dto.CarUpdateDto;
 import academy.mindswap.rentacar.dto.RentalDto;
 import academy.mindswap.rentacar.model.Car;
 import academy.mindswap.rentacar.model.Rental;
@@ -54,21 +56,53 @@ public class RentalServiceImpl implements RentalService {
 
     @Override
     public RentalDto getRentalById(Long rentalId) {
-        return null;
+        Rental rental = rentalRepository.getReferenceById(rentalId);
+        return rentalConverter.fromRentalEntityToRentalDto(rental);
+
     }
 
     @Override
     public List<RentalDto> getAllRentals() {
-        return null;
+        List<Rental> rentalsList = rentalRepository.findAll();
+        List<RentalDto> rentalDtos = rentalsList.stream()
+                .map(rental -> rentalConverter.fromRentalEntityToRentalDto(rental))
+                .toList();
+         return  rentalDtos;
     }
-
+    @Transactional
     @Override
     public RentalDto updateRental(RentalDto rentalDto) {
-        return null;
-    }
+//        User user = userRepository.getReferenceById(rentalDto.getUserId());
+//        Car car = carRepository.getReferenceById(rentalDto.getCarId());
 
+        //TODO : fazer update nas listas de rentals do carro e user
+       // carRepository.findAll().stream().filter(c -> c.getRentalList().stream().filter(r -> r.getId().equals(rentalDto.getId())).isParallel());
+          Rental rental = rentalRepository.getReferenceById(rentalDto.getId());
+//        car.getRentalList().add(rental);
+//        rental.setUser(user);
+//        rental.setCar(car);
+        rental.setRentalDate(rentalDto.getRentalDate());
+        rental.setDeliveryDate(rentalDto.getDeliveryDate());
+        rentalRepository.save(rental);
+            return rentalConverter.fromRentalEntityToRentalDto(rental);
+        }
+
+
+
+    @Transactional
     @Override
     public void deleteRental(Long rentalId) {
+        Rental rental = rentalRepository.getReferenceById(rentalId);
+        Car car = rental.getCar();
+        User user = rental.getUser();
 
+        // remove rental from car's rental list
+        car.getRentalList().remove(rental);
+        user.getRentalList().remove(rental);
+        carRepository.save(car);
+        userRepository.save(user);
+        //TODO : How to make delete foreign keys
+        // delete rental entity
+        rentalRepository.deleteById(rentalId);
     }
 }
