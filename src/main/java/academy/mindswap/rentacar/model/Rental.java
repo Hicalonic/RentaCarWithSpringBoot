@@ -23,10 +23,10 @@ public class Rental {
     private String deliveryDate;
     @ManyToOne(targetEntity = Car.class)
     @JoinColumn(name = "car_id")
-    private Long carId;
+    private Car car;
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "user_id")
-    private Long userId;
+    private User user;
 
 
 }

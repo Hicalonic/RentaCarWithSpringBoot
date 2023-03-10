@@ -11,8 +11,8 @@ public class RentalConverter {
                 .id(rental.getId())
                 .rentalDate(rental.getRentalDate())
                 .deliveryDate(rental.getDeliveryDate())
-                .carId(rental.getCarId())
-                .userId(rental.getUserId())
+                .carId(rental.getCar().getId())
+                .userId(rental.getUser().getId())
                 .build();
     }
 
@@ -21,9 +21,6 @@ public class RentalConverter {
                 .id(rentalDto.getId())
                 .rentalDate(rentalDto.getRentalDate())
                 .deliveryDate(rentalDto.getDeliveryDate())
-                .carId(rentalDto.getCarId())
-                .userId(rentalDto.getUserId())
                 .build();
     }
-
 }

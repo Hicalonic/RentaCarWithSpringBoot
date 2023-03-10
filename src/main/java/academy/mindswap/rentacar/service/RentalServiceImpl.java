@@ -31,17 +31,19 @@ public class RentalServiceImpl implements RentalService {
         this.carRepository = carRepository;
         this.userRepository = userRepository;
     }
-
+    @Transactional
     @Override
     public RentalDto createRental(RentalDto rentalDto) {
+
+//        carRepository.findOne(rentalDto.getCar).orElseThrow(() -> new EntityNotFoundException("Car not found with id: " + rentalDto.getCarId()));)
         carRepository.findById(rentalDto.getCarId()).orElseThrow(() -> new EntityNotFoundException("Car not found with id: " + rentalDto.getCarId()));
         userRepository.findById(rentalDto.getUserId()).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + rentalDto.getUserId()));
 
         Rental rental = rentalConverter.fromRentalDtoToEntity(rentalDto);
         Car carChoosen = carRepository.getReferenceById(rentalDto.getCarId());
         User userChoosen = userRepository.getReferenceById(rentalDto.getUserId());
-        rental.setCarId(carChoosen.getId());
-        rental.setUserId(userChoosen.getId());
+        rental.setCar(carChoosen);
+        rental.setUser(userChoosen);
         carChoosen.getRentalList().add(rental);
         userChoosen.getRentalList().add(rental);
 
