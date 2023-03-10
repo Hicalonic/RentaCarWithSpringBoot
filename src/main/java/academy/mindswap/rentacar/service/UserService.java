@@ -18,4 +18,6 @@ public interface UserService {
     UserDto updateUser(UserUpdateDto userUpdateDto);
 
     void deleteUser(Long userId);
+
+    UserDto findUserByFirstName(String firstName);
 }

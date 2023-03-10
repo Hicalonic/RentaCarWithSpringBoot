@@ -41,8 +41,8 @@ public class UserServiceImpl implements  UserService{
     public UserDto getUserById(Long userId) {
        User user = userRepository.getReferenceById(userId);
          return userConverter.fromUserEntityToUserDto(user);
-
     }
+
 
     @Override
     public List<UserDto> getAllUsers() {
@@ -71,11 +71,16 @@ public class UserServiceImpl implements  UserService{
         return userConverter.fromUserEntityToUserDto(user);
     }
 
-
-
     @Override
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
 
+    }
+
+    @Override
+    public UserDto findUserByFirstName(String firstName) {
+       User userFound = userRepository.findUserByFirstName(firstName);
+       UserDto userFoundDto = userConverter.fromUserEntityToUserDto(userFound);
+       return userFoundDto;
     }
 }
