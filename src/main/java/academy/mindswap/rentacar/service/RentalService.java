@@ -19,5 +19,7 @@ public interface RentalService  {
     RentalDto updateRental(RentalDto rentalDto);
 
     void deleteRental(Long rentalId);
+
+    List<CarDto> getAvailableCars();
 }
 

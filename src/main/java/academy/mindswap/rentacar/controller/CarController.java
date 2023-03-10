@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -34,6 +35,9 @@ public class CarController {
     }
 
 
+
+
+
     @PostMapping
     public ResponseEntity<CarDto> createCar(@Valid @RequestBody CarDto carDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
@@ -47,6 +51,23 @@ public class CarController {
         }
              CarDto carDto1 = carService.createCar(carDto);
         return new ResponseEntity<>(carDto1, HttpStatus.CREATED);
+    }
+
+    @PostMapping(path = "/createCars")
+    public ResponseEntity<List<CarDto>> createCars(@Valid @RequestBody List<CarDto> carDtos, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+
+            List<FieldError> errors = bindingResult.getFieldErrors();
+
+            for (FieldError error : errors) {
+                System.out.println(error.getObjectName() + " - " + error.getDefaultMessage());
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        carDtos.stream().forEach(c -> carService.createCar(c));
+
+        return  new ResponseEntity<>(carDtos,HttpStatus.OK);
     }
 
 

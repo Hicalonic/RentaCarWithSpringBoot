@@ -15,7 +15,7 @@ import java.util.List;
 @Table(name = "cars")
 public class Car {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(nullable = false)
     private String brand;
@@ -27,7 +27,6 @@ public class Car {
     private String licensePlate;
     @Column(nullable = false)
     private Integer manufacturingYear;
-
     @OneToMany
     private List<Rental> rentalList;
 

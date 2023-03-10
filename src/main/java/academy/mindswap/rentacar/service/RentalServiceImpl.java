@@ -1,5 +1,6 @@
 package academy.mindswap.rentacar.service;
 
+import academy.mindswap.rentacar.converter.CarConverter;
 import academy.mindswap.rentacar.converter.RentalConverter;
 import academy.mindswap.rentacar.dto.CarDto;
 import academy.mindswap.rentacar.dto.CarUpdateDto;
@@ -15,6 +16,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -23,21 +25,22 @@ public class RentalServiceImpl implements RentalService {
 
     private RentalConverter rentalConverter;
     private RentalRepository rentalRepository;
-
     private CarRepository carRepository;
     private UserRepository userRepository;
+    private CarConverter carConverter;
+
     @Autowired
-    public RentalServiceImpl(RentalConverter rentalConverter, RentalRepository rentalRepository,UserRepository userRepository,CarRepository carRepository) {
+    public RentalServiceImpl(RentalConverter rentalConverter, RentalRepository rentalRepository,UserRepository userRepository,CarRepository carRepository, CarConverter carConverter) {
         this.rentalConverter = rentalConverter;
         this.rentalRepository = rentalRepository;
         this.carRepository = carRepository;
         this.userRepository = userRepository;
+        this.carConverter = carConverter;
     }
     @Transactional
     @Override
     public RentalDto createRental(RentalDto rentalDto) {
 
-//        carRepository.findOne(rentalDto.getCar).orElseThrow(() -> new EntityNotFoundException("Car not found with id: " + rentalDto.getCarId()));)
         carRepository.findById(rentalDto.getCarId()).orElseThrow(() -> new EntityNotFoundException("Car not found with id: " + rentalDto.getCarId()));
         userRepository.findById(rentalDto.getUserId()).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + rentalDto.getUserId()));
 
@@ -104,5 +107,13 @@ public class RentalServiceImpl implements RentalService {
         //TODO : How to make delete foreign keys
         // delete rental entity
         rentalRepository.deleteById(rentalId);
+    }
+
+    @Override
+    public List<CarDto> getAvailableCars() {
+        LocalDate today = LocalDate.now();
+        List<Car> list = rentalRepository.findAvailableCars(today);
+        List<CarDto> listDto = list.stream().map(c -> carConverter.fromCarEntityToCarDto(c)).toList();
+        return listDto;
     }
 }

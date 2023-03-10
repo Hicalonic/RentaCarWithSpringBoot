@@ -15,12 +15,12 @@ import java.util.List;
 @Table(name = "rentals")
 public class Rental {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(nullable = false)
-    private String rentalDate;
+    private LocalDate rentalDate;
     @Column(nullable = false)
-    private String deliveryDate;
+    private LocalDate deliveryDate;
     @ManyToOne(targetEntity = Car.class)
     @JoinColumn(name = "car_id")
     private Car car;

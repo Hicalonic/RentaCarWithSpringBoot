@@ -18,4 +18,7 @@ public interface CarService {
     CarDto updateCar(CarUpdateDto carUpdateDto);
 
     void deleteCar(Long carId);
+
+    List<CarDto> createCars(List<CarDto> carDtos);
+
 }

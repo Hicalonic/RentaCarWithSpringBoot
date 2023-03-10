@@ -49,6 +49,25 @@ public class UserController {
       return new ResponseEntity<>(savedUser, HttpStatus.OK);
     }
 
+    @PostMapping(path = "{createUsers}")
+    public ResponseEntity<String> createUsers(@Valid @RequestBody List<UserCreateDto> userCreateDtoList, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+
+            List<FieldError> errors = bindingResult.getFieldErrors();
+
+            for (FieldError error : errors) {
+                System.out.println(error.getObjectName() + " - " + error.getDefaultMessage());
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        userCreateDtoList.stream().forEach(c -> userService.createUser(c));
+
+        return  new ResponseEntity<>("Ok",HttpStatus.OK);
+    }
+
+
+
     @GetMapping(path = "{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);

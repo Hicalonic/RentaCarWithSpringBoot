@@ -70,4 +70,13 @@ public class CarServiceImpl implements CarService {
     public void deleteCar(Long carId) {
         carRepository.deleteById(carId);
     }
+
+    @Override
+    public List<CarDto> createCars(List<CarDto> carDtos) {
+        List<Car> carsList =  carDtos.stream().map(car -> carConverter.fromCarDtoToCarEntity(car)).toList();
+        List<CarDto> carDtoList = carsList.stream().map(car -> carConverter.fromCarEntityToCarDto(car)).toList();
+        carsList.stream().map(car -> carRepository.save(car));
+
+        return carDtoList;
+    }
 }

@@ -2,6 +2,7 @@ package academy.mindswap.rentacar.controller;
 
 import academy.mindswap.rentacar.dto.CarDto;
 import academy.mindswap.rentacar.dto.RentalDto;
+import academy.mindswap.rentacar.model.Car;
 import academy.mindswap.rentacar.service.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -41,10 +43,17 @@ public class RentalController {
         return new ResponseEntity<>(savedRentalDto, HttpStatus.OK);
     }
 
+
       @GetMapping("")
         public ResponseEntity<List<RentalDto>> getRentals() {
 
         return new ResponseEntity<>(rentalService.getAllRentals(), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/available")
+    public ResponseEntity<List<CarDto>> getAvailableCars() {
+        List<CarDto> list = rentalService.getAvailableCars();
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping(path = "{rentalID}")

@@ -20,9 +20,9 @@ public class RentalDto {
     @NotNull
     private Long id;
     @NotNull
-    private String rentalDate;
+    private LocalDate rentalDate;
     @NotNull
-    private String deliveryDate;
+    private LocalDate deliveryDate;
     @NotNull
     private Long carId;
     @NotNull
