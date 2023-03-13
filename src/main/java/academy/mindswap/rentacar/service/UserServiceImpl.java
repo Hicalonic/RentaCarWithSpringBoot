@@ -5,6 +5,7 @@ import academy.mindswap.rentacar.converter.UserConverter;
 import academy.mindswap.rentacar.dto.UserCreateDto;
 import academy.mindswap.rentacar.dto.UserDto;
 import academy.mindswap.rentacar.dto.UserUpdateDto;
+import academy.mindswap.rentacar.exceptions.EmailException;
 import academy.mindswap.rentacar.model.User;
 import academy.mindswap.rentacar.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -29,6 +30,11 @@ public class UserServiceImpl implements  UserService{
 
     @Override
     public UserDto createUser(UserCreateDto userCreateDto) {
+       boolean hasEmail;
+       hasEmail = userRepository.findAll().stream().anyMatch(u ->u.getEmail().equals(userCreateDto.getEmail()));
+       if(hasEmail) {
+           throw new EmailException("Email already exists!");
+       }
         if(!userCreateDto.getPassword().equals(userCreateDto.getRetypedPassword())) {
             throw new IllegalArgumentException(("Password does not match"));
         }
@@ -82,5 +88,11 @@ public class UserServiceImpl implements  UserService{
        User userFound = userRepository.findUserByFirstName(firstName);
        UserDto userFoundDto = userConverter.fromUserEntityToUserDto(userFound);
        return userFoundDto;
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        User user = userRepository.findUserByEmail(email);
+        return user;
     }
 }

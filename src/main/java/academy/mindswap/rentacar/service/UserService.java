@@ -20,4 +20,5 @@ public interface UserService {
     void deleteUser(Long userId);
 
     UserDto findUserByFirstName(String firstName);
+    User findUserByEmail(String email);
 }
