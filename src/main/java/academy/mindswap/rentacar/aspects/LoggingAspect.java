@@ -22,35 +22,37 @@ public class LoggingAspect {
     /**
     Before is just to log every action for all controllers.
      */
-    @Before("execution(* academy.mindswap.rentacar.controller.*(..))")
-    public void checkUserBefore(JoinPoint joinPoint) {
-        logger.info("Before " + joinPoint.getSignature().getName() + " method call");
-    }
-
-
-    /**
-     * Notificates everytime that a user is created.
-     * @param joinPoint
-     */
-    @AfterReturning(pointcut = "execution(* academy.mindswap.rentacar.controller.UserController.createUser.*)")
-    public void checkUserAfter(JoinPoint joinPoint, Object result) throws IOException {
+    @Before("execution(* academy.mindswap.rentacar.controller.*.*(..))")
+    public void checkUserBefore(JoinPoint joinPoint) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter("Logs.txt"));
-        FileHandler handler = new FileHandler("Logs.txt", true);
-        handler.setLevel(Level.INFO);
-        logger.
+
+        writer.write("Before " + joinPoint.getSignature().getName() + " method call\n");
+        writer.flush();
         logger.info("Before " + joinPoint.getSignature().getName() + " method call");
-        logger.info("Response" + result);
-
-        handler
-
     }
 
 
-    @AfterThrowing(pointcut = "execution(* academy.mindswap.rentacar.controller.*(..))", throwing = "exception")
-    public void logAfterThrowing(JoinPoint joinPoint, Throwable exception) {
-        logger.error("Exception in " + joinPoint.getSignature().getName() + " method call");
-        logger.error("Exception: " + exception);
-    }
+//    /**
+//     * Notificates everytime that a user is created.
+//     * @param joinPoint
+//     */
+//    @AfterReturning(pointcut = "execution(* academy.mindswap.rentacar.controller.UserController.createUser())")
+//    public void checkUserAfter(JoinPoint joinPoint, Object result) throws IOException {
+//        BufferedWriter writer = new BufferedWriter(new FileWriter("Logs.txt"));
+//
+//        writer.write("Before " + joinPoint.getSignature().getName() + " method call\n");
+//        writer.write("Response: " + result + "\n");
+//
+//        logger.info("Before " + joinPoint.getSignature().getName() + " method call");
+//        logger.info("Response" + result);
+//    }
+
+
+//    @AfterThrowing(pointcut = "execution(* academy.mindswap.rentacar.controller.*(..))", throwing = "exception")
+//    public void logAfterThrowing(JoinPoint joinPoint, Throwable exception) {
+//        logger.error("Exception in " + joinPoint.getSignature().getName() + " method call");
+//        logger.error("Exception: " + exception);
+//    }
 
 
 
