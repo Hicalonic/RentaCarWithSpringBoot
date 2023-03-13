@@ -24,7 +24,7 @@ public class LoggingAspect {
      */
     @Before("execution(* academy.mindswap.rentacar.controller.*.*(..))")
     public void checkUserBefore(JoinPoint joinPoint) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("Logs.txt"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/Logs.txt", true));
 
         writer.write("Before " + joinPoint.getSignature().getName() + " method call\n");
         writer.flush();
