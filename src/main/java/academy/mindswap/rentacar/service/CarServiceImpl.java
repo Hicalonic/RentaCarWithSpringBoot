@@ -3,6 +3,7 @@ package academy.mindswap.rentacar.service;
 import academy.mindswap.rentacar.converter.CarConverter;
 import academy.mindswap.rentacar.dto.CarDto;
 import academy.mindswap.rentacar.dto.CarUpdateDto;
+import academy.mindswap.rentacar.exceptions.LicensePlateException;
 import academy.mindswap.rentacar.model.Car;
 import academy.mindswap.rentacar.repository.CarRepository;
 import jakarta.transaction.Transactional;
@@ -29,6 +30,11 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public CarDto createCar(CarDto carDto) {
+
+       boolean licensePlate = carRepository.findAll().stream().anyMatch(c -> c.getLicensePlate().equals(carDto.getLicensePlate()));
+       if(licensePlate) {
+           throw new LicensePlateException("license plate already exists");
+       }
        Car car =  carConverter.fromCarDtoToCarEntity(carDto);
        carRepository.save(car);
 

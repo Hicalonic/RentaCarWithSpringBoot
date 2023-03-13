@@ -2,6 +2,7 @@ package academy.mindswap.rentacar.aspects;
 
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
@@ -11,8 +12,7 @@ import org.springframework.stereotype.Component;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
+
 
 @Component
 @Aspect
@@ -24,36 +24,53 @@ public class LoggingAspect {
      */
     @Before("execution(* academy.mindswap.rentacar.controller.*.*(..))")
     public void checkUserBefore(JoinPoint joinPoint) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/Logs.txt", true));
+        System.out.println("1");
 
-        writer.write("Before " + joinPoint.getSignature().getName() + " method call\n");
-        writer.flush();
-        logger.info("Before " + joinPoint.getSignature().getName() + " method call");
+        logger.info("Method " + joinPoint.getSignature().getName() + " has been called!");
     }
 
 
-//    /**
-//     * Notificates everytime that a user is created.
-//     * @param joinPoint
-//     */
-//    @AfterReturning(pointcut = "execution(* academy.mindswap.rentacar.controller.UserController.createUser())")
-//    public void checkUserAfter(JoinPoint joinPoint, Object result) throws IOException {
-//        BufferedWriter writer = new BufferedWriter(new FileWriter("Logs.txt"));
-//
-//        writer.write("Before " + joinPoint.getSignature().getName() + " method call\n");
+    /**
+     * Notificates everytime that a user is created.
+     * @param joinPoint
+     */
+    @AfterReturning(pointcut = "execution(* academy.mindswap.rentacar.controller.UserController.createUser())", returning = "result")
+    public void checkCarAfter(JoinPoint joinPoint, Object result) {
+//        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/Logs.txt", true));
+//        writer.write("Method " + joinPoint.getSignature().getName() + " is Done\n");
 //        writer.write("Response: " + result + "\n");
-//
-//        logger.info("Before " + joinPoint.getSignature().getName() + " method call");
-//        logger.info("Response" + result);
-//    }
+//        writer.flush();
+        logger.info("Method " + joinPoint.getSignature().getName() + " is Done!");
+        logger.info("2");
+//        logger.info("Response:" + result);
+    }
 
 
-//    @AfterThrowing(pointcut = "execution(* academy.mindswap.rentacar.controller.*(..))", throwing = "exception")
-//    public void logAfterThrowing(JoinPoint joinPoint, Throwable exception) {
-//        logger.error("Exception in " + joinPoint.getSignature().getName() + " method call");
-//        logger.error("Exception: " + exception);
-//    }
+    @AfterThrowing(pointcut = "execution(* academy.mindswap.rentacar.controller.*.*(..))", throwing = "exception")
+    public void logAfterThrowing(JoinPoint joinPoint, Throwable exception) throws IOException {
+        System.out.println("3");
+        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/Logs.txt", true));
 
+        writer.write("Before " + joinPoint.getSignature().getName() + " method call\n");
+        writer.write("Response: " + exception + "\n");
+        writer.flush();
+
+        logger.error("Exception in " + joinPoint.getSignature().getName() + " method call");
+        logger.error("Exception: " + exception);
+    }
+
+
+    @Around("execution(* academy.mindswap.rentacar.controller.*.*(..))")
+    public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
+        System.out.println("4");
+        long startTime = System.currentTimeMillis();
+        logger.info("Before " + joinPoint.getSignature().getName() + " method call");
+        Object result = joinPoint.proceed();
+        long endTime = System.currentTimeMillis();
+        logger.info("After " + joinPoint.getSignature().getName() + " method call");
+        logger.info("Execution time of " + joinPoint.getSignature().getName() + " method call: " + (endTime - startTime) + " milliseconds");
+        return result;
+    }
 
 
 
