@@ -33,23 +33,23 @@ public class LoggingAspect {
      * @param joinPoint
      */
     @AfterReturning(pointcut = "execution(* academy.mindswap.rentacar.controller.UserController.createUser())", returning = "result")
-    public void checkCarAfter(JoinPoint joinPoint, Object result) {
-//        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/Logs.txt", true));
-//        writer.write("Method " + joinPoint.getSignature().getName() + " is Done\n");
-//        writer.write("Response: " + result + "\n");
-//        writer.flush();
+    public void checkCarAfter(JoinPoint joinPoint, Object result) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/Logs.txt", true));
+        writer.write("Method " + joinPoint.getSignature().getName() + " is Done\n");
+        writer.write("Response: " + result + "\n");
+        writer.flush();
         logger.info("Method " + joinPoint.getSignature().getName() + " is Done!");
-//        logger.info("Response:" + result);
+        logger.info("Response:" + result);
     }
 
 
     @AfterThrowing(pointcut = "execution(* academy.mindswap.rentacar.controller.*.*(..))", throwing = "exception")
-    public void logAfterThrowing(JoinPoint joinPoint, Throwable exception)  {
-//        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/Logs.txt", true));
-//
-//        writer.write("Before " + joinPoint.getSignature().getName() + " method call\n");
-//        writer.write("Response: " + exception + "\n");
-//        writer.flush();
+    public void logAfterThrowing(JoinPoint joinPoint, Throwable exception) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/Logs.txt", true));
+
+        writer.write("Before " + joinPoint.getSignature().getName() + " method call\n");
+        writer.write("Response: " + exception + "\n");
+        writer.flush();
 
         logger.error("Exception in " + joinPoint.getSignature().getName() + " method call");
         logger.error("Exception: " + exception);
