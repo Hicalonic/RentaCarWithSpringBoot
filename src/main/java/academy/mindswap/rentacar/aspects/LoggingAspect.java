@@ -1,6 +1,5 @@
 package academy.mindswap.rentacar.aspects;
 
-
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -23,8 +22,7 @@ public class LoggingAspect {
     Before is just to log every action for all controllers.
      */
     @Before("execution(* academy.mindswap.rentacar.controller.*.*(..))")
-    public void checkUserBefore(JoinPoint joinPoint) throws IOException {
-        System.out.println("1");
+    public void checkUserBefore(JoinPoint joinPoint) {
 
         logger.info("Method " + joinPoint.getSignature().getName() + " has been called!");
     }
@@ -41,19 +39,17 @@ public class LoggingAspect {
 //        writer.write("Response: " + result + "\n");
 //        writer.flush();
         logger.info("Method " + joinPoint.getSignature().getName() + " is Done!");
-        logger.info("2");
 //        logger.info("Response:" + result);
     }
 
 
     @AfterThrowing(pointcut = "execution(* academy.mindswap.rentacar.controller.*.*(..))", throwing = "exception")
-    public void logAfterThrowing(JoinPoint joinPoint, Throwable exception) throws IOException {
-        System.out.println("3");
-        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/Logs.txt", true));
-
-        writer.write("Before " + joinPoint.getSignature().getName() + " method call\n");
-        writer.write("Response: " + exception + "\n");
-        writer.flush();
+    public void logAfterThrowing(JoinPoint joinPoint, Throwable exception)  {
+//        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/Logs.txt", true));
+//
+//        writer.write("Before " + joinPoint.getSignature().getName() + " method call\n");
+//        writer.write("Response: " + exception + "\n");
+//        writer.flush();
 
         logger.error("Exception in " + joinPoint.getSignature().getName() + " method call");
         logger.error("Exception: " + exception);
@@ -62,7 +58,6 @@ public class LoggingAspect {
 
     @Around("execution(* academy.mindswap.rentacar.controller.*.*(..))")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        System.out.println("4");
         long startTime = System.currentTimeMillis();
         logger.info("Before " + joinPoint.getSignature().getName() + " method call");
         Object result = joinPoint.proceed();
