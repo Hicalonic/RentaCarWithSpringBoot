@@ -3,6 +3,7 @@ package academy.mindswap.rentacar.converter;
 import academy.mindswap.rentacar.dto.UserCreateDto;
 import academy.mindswap.rentacar.dto.UserDto;
 import academy.mindswap.rentacar.dto.UserUpdateDto;
+import academy.mindswap.rentacar.model.Role;
 import academy.mindswap.rentacar.model.User;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,6 @@ public class UserConverter {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())
-                .role(user.getRole())
                 .build();
     }
 
@@ -25,9 +25,9 @@ public class UserConverter {
                 .firstName(userDto.getFirstName())
                 .lastName(userDto.getLastName())
                 .email(userDto.getEmail())
-                .role(userDto.getRole())
                 .build();
     }
+
 
     public User fromUserCreateDtoToEntity (UserCreateDto userCreateDto){
         return User.builder()
@@ -35,7 +35,6 @@ public class UserConverter {
                 .lastName(userCreateDto.getLastName())
                 .email(userCreateDto.getEmail())
                 .password(userCreateDto.getPassword())
-                .role(userCreateDto.getRole())
                 .build();
     }
 
@@ -45,7 +44,6 @@ public class UserConverter {
                 .lastName(userUpdateDto.getLastName())
                 .email(userUpdateDto.getEmail())
                 .password(userUpdateDto.getNewPassword())
-                .role(userUpdateDto.getRole())
                 .build();
     }
 }

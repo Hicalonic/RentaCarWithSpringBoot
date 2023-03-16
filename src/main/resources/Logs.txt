@@ -1,2 +1,18 @@
 Before createUser method call
 Before createUser method call
+Before updateRole method call
+Response: org.springframework.dao.InvalidDataAccessApiUsageException: No enum constant academy.mindswap.rentacar.model.Role.Driver
+Before updateRole method call
+Response: org.springframework.dao.InvalidDataAccessApiUsageException: No enum constant academy.mindswap.rentacar.model.Role.Driver
+Before updateRole method call
+Response: org.springframework.dao.IncorrectResultSizeDataAccessException: query did not return a unique result: 2
+Before updateRole method call
+Response: org.springframework.dao.IncorrectResultSizeDataAccessException: query did not return a unique result: 2
+Before updateRole method call
+Response: org.springframework.dao.IncorrectResultSizeDataAccessException: query did not return a unique result: 2
+Before updateRole method call
+Response: org.springframework.dao.IncorrectResultSizeDataAccessException: query did not return a unique result: 2
+Before updateRole method call
+Response: org.springframework.dao.IncorrectResultSizeDataAccessException: query did not return a unique result: 2
+Before updateRole method call
+Response: org.springframework.dao.IncorrectResultSizeDataAccessException: query did not return a unique result: 2
