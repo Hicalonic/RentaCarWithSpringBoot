@@ -1,6 +1,7 @@
 package academy.mindswap.rentacar.token;
 
 
+import academy.mindswap.rentacar.model.Role;
 import academy.mindswap.rentacar.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,10 @@ public class Token {
   public TokenType tokenType = TokenType.BEARER;
 
   public boolean revoked;
+
+  @Enumerated(EnumType.STRING)
+  public Role role;
+
 
   public boolean expired;
 

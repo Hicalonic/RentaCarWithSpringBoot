@@ -27,6 +27,7 @@ public class SecurityConfiguration {
         .csrf()
         .disable()
         .authorizeHttpRequests()
+            .requestMatchers("/api/v1/demo-controller/updaterole").hasRole("ADMIN")
         .requestMatchers("/api/v1/auth/**")
           .permitAll()
         .anyRequest()
@@ -42,7 +43,6 @@ public class SecurityConfiguration {
         .addLogoutHandler(logoutHandler)
         .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
     ;
-
     return http.build();
   }
 }

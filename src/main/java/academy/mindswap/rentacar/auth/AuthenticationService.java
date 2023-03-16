@@ -60,6 +60,7 @@ public class AuthenticationService {
     var token = Token.builder()
         .user(user)
         .token(jwtToken)
+            .role(Role.USER)
         .tokenType(TokenType.BEARER)
         .expired(false)
         .revoked(false)
