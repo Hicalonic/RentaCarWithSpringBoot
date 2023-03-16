@@ -1,5 +1,8 @@
 package academy.mindswap.rentacar.dto;
 
+import academy.mindswap.rentacar.model.Role;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -11,14 +14,14 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
-    @NotNull
-    private Long id;
-    @NotBlank(message = "Must have a first name")
-    private String firstName;
-    @NotBlank(message = "Must have a last name")
-    private String lastName;
+public class UserDtoUpdateRole {
     @NotBlank(message = "Must have an email")
-    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message = "Email doesn't seem to be correct")
+    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message = "Invalid email")
     private String email;
+
+
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "Must have a role")
+    private Role role;
+
 }

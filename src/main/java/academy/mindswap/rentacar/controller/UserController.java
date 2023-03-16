@@ -5,6 +5,7 @@ package academy.mindswap.rentacar.controller;
 
 import academy.mindswap.rentacar.dto.UserCreateDto;
 import academy.mindswap.rentacar.dto.UserDto;
+import academy.mindswap.rentacar.dto.UserDtoUpdateRole;
 import academy.mindswap.rentacar.dto.UserUpdateDto;
 import academy.mindswap.rentacar.service.UserService;
 import jakarta.validation.Valid;
@@ -15,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.PublicKey;
 import java.util.List;
 
 @RestController
@@ -89,6 +91,13 @@ public class UserController {
     public ResponseEntity<String> deleteUser(@PathVariable("userID") Long id) {
         userService.deleteUser(id);
         return new ResponseEntity<>("User has been deleted",HttpStatus.OK);
+    }
+
+    @PutMapping(path = "/updaterole")
+    public ResponseEntity<String> updateUserRole(@Valid @RequestBody UserDtoUpdateRole userDtoUpdateRole) {
+        System.out.println("User controller  - updateUserRole()");
+        userService.updateRole(userDtoUpdateRole);
+        return new ResponseEntity<>("User role has been updated", HttpStatus.OK);
     }
 
 

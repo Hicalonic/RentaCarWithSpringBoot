@@ -4,12 +4,16 @@ package academy.mindswap.rentacar.service;
 import academy.mindswap.rentacar.converter.UserConverter;
 import academy.mindswap.rentacar.dto.UserCreateDto;
 import academy.mindswap.rentacar.dto.UserDto;
+import academy.mindswap.rentacar.dto.UserDtoUpdateRole;
 import academy.mindswap.rentacar.dto.UserUpdateDto;
 import academy.mindswap.rentacar.exceptions.EmailException;
+import academy.mindswap.rentacar.model.Role;
 import academy.mindswap.rentacar.model.User;
 import academy.mindswap.rentacar.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -72,7 +76,6 @@ public class UserServiceImpl implements  UserService{
         user.setFirstName(userUpdateDto.getFirstName());
         user.setLastName(userUpdateDto.getLastName());
         user.setEmail(userUpdateDto.getEmail());
-        user.setRole(userUpdateDto.getRole());
         user.setPassword(userUpdateDto.getNewPassword());
         return userConverter.fromUserEntityToUserDto(user);
     }
@@ -94,5 +97,22 @@ public class UserServiceImpl implements  UserService{
     public User findUserByEmail(String email) {
         User user = userRepository.findUserByEmail(email);
         return user;
+    }
+
+    @Override
+    @PreAuthorize("hasRole('ADMIN')")
+    public void updateRole(UserDtoUpdateRole updateDtoUpdateRole) {
+
+        User user = userRepository.findByEmail(updateDtoUpdateRole.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email : " + updateDtoUpdateRole.getEmail()));
+
+        System.out.println(updateDtoUpdateRole.getEmail().toString());
+        System.out.println(updateDtoUpdateRole.getRole().toString());
+
+        System.out.println("-".repeat(50));
+        System.out.println(user.getRole().toString());
+
+        user.setRole(updateDtoUpdateRole.getRole());
+        userRepository.save(user);
     }
 }

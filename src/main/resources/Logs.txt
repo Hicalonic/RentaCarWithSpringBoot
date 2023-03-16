@@ -1,2 +1,4 @@
 Before createUser method call
 Before createUser method call
+Before createCar method call
+Response: academy.mindswap.rentacar.exceptions.LicensePlateException: license plate already exists

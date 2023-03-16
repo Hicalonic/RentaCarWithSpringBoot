@@ -32,6 +32,4 @@ public class UserUpdateDto {
     @NotBlank(message = "Must have a password")
     private String currentPassword;
 
-    @NotBlank(message = "Must have a role")
-    private String role;
 }

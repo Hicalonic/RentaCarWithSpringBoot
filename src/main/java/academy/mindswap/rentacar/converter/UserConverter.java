@@ -15,7 +15,6 @@ public class UserConverter {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())
-                .role(user.getRole())
                 .build();
     }
 
@@ -25,7 +24,6 @@ public class UserConverter {
                 .firstName(userDto.getFirstName())
                 .lastName(userDto.getLastName())
                 .email(userDto.getEmail())
-                .role(userDto.getRole())
                 .build();
     }
 
@@ -35,7 +33,6 @@ public class UserConverter {
                 .lastName(userCreateDto.getLastName())
                 .email(userCreateDto.getEmail())
                 .password(userCreateDto.getPassword())
-                .role(userCreateDto.getRole())
                 .build();
     }
 
@@ -45,7 +42,6 @@ public class UserConverter {
                 .lastName(userUpdateDto.getLastName())
                 .email(userUpdateDto.getEmail())
                 .password(userUpdateDto.getNewPassword())
-                .role(userUpdateDto.getRole())
                 .build();
     }
 }

@@ -30,6 +30,4 @@ public class UserCreateDto {
     @NotBlank(message = "Must have a password")
     private String retypedPassword;
 
-    @NotBlank(message = "Must have a role")
-    private String role;
 }

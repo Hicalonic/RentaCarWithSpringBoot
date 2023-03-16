@@ -18,8 +18,6 @@ import java.util.List;
 @RequestMapping("/car")
 public class CarController {
 
-
-
     private CarService carService;
     @Autowired
     public CarController (CarService carService) {
@@ -35,9 +33,6 @@ public class CarController {
     public ResponseEntity<CarDto> getCarById(@PathVariable("carID") Long id) {
         return new ResponseEntity<>(carService.getCarById(id), HttpStatus.OK);
     }
-
-
-
 
 
     @PostMapping

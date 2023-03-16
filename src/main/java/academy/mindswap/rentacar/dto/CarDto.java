@@ -13,8 +13,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CarDto {
-    @NotNull
-    private Long id;
     @NotBlank(message = "Must have a brand name")
     private String brand;
     @NotBlank(message = "Must have a model name")
