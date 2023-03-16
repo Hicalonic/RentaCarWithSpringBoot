@@ -34,7 +34,7 @@ public class User implements UserDetails {
     @OneToMany
     private List<Rental> rentalList;
     @Enumerated(EnumType.STRING)
-    private Role role = Role.USER;
+    private Role role = Role.CLIENT;
 
 
     @Override

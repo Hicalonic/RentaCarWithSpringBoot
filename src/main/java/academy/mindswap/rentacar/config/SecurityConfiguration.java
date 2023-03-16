@@ -1,6 +1,7 @@
 package academy.mindswap.rentacar.config;
 
 import academy.mindswap.rentacar.model.Role;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
@@ -29,18 +31,19 @@ public class SecurityConfiguration {
         .csrf()
         .disable()
         .authorizeHttpRequests()
-            .requestMatchers("user/updaterole")
-            .hasAuthority("ADMIN")
-        .requestMatchers("/api/v1/auth/**")
-          .permitAll()
-//            .requestMatchers("user/updaterole")
-//            .hasAuthority("ADMIN")
-//            .requestMatchers("car/createcars")
-//            .hasAuthority("ADMIN")
-//            .requestMatchers("user/userupdaterole")
-//            .hasRole("ADMIN")
+            .requestMatchers("/auth/**").permitAll()
+            .requestMatchers("/**").hasAuthority("ADMIN")
+            .requestMatchers("user/client/employee/*").hasAuthority("EMPLOYEE")
+            .requestMatchers("user/client/**").hasAuthority("CLIENT")
+            .requestMatchers("car/client/employee/*").hasAuthority("EMPLOYEE")
+            .requestMatchers("car/client/**").hasAuthority("CLIENT")
+            .requestMatchers("rental/client/employee/*").hasAuthority("EMPLOYEE")
+            .requestMatchers("rental/client/**").hasAuthority("CLIENT")
         .anyRequest()
           .authenticated()
+            .and()
+            .exceptionHandling()
+            .accessDeniedHandler(accessDeniedHandler())
         .and()
           .sessionManagement()
           .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -50,9 +53,15 @@ public class SecurityConfiguration {
         .logout()
         .logoutUrl("/api/v1/auth/logout")
         .addLogoutHandler(logoutHandler)
-        .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
-    ;
+        .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext());
 
     return http.build();
+  }
+
+  @Bean
+  public AccessDeniedHandler accessDeniedHandler() {
+    return (request, response, accessDeniedException) -> {
+      response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied: You do not have permission to access this resource.");
+    };
   }
 }

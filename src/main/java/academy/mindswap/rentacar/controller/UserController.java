@@ -32,13 +32,23 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("")
+    @GetMapping(path = "/client/employee")
     public ResponseEntity<List<UserDto>> getUsers() {
         List<UserDto> users = userService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @PostMapping
+    @GetMapping(path = "/client/employee/id/{id}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/client/employee/name/{firstName}")
+    public ResponseEntity<UserDto> getUserByFirstName(@PathVariable("firstName") String firstName) {
+        return new ResponseEntity<>(userService.findUserByFirstName(firstName), HttpStatus.OK);
+    }
+
+//    @PostMapping(path =)
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserCreateDto userCreateDto, BindingResult bindingResult) {
       if(bindingResult.hasErrors()) {
 
@@ -53,7 +63,7 @@ public class UserController {
       return new ResponseEntity<>(savedUser, HttpStatus.OK);
     }
 
-    @PostMapping(path = "{createUsers}")
+//    @PostMapping(path = "client/employee/admin")
     public ResponseEntity<String> createUsers(@Valid @RequestBody List<UserCreateDto> userCreateDtoList, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
 
@@ -72,30 +82,20 @@ public class UserController {
 
 
 
-    @GetMapping(path = "{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
-    }
-
-    @GetMapping(path = "/name/{firstName}")
-    public ResponseEntity<UserDto> getUserByFirstName(@PathVariable("firstName") String firstName) {
-        return new ResponseEntity<>(userService.findUserByFirstName(firstName), HttpStatus.OK);
-    }
-
-    @PutMapping(path = "{userId}")
+    @PutMapping(path = "/client/employee")
     public ResponseEntity<String> updateUser(@PathVariable("userId") Long id,@Valid @RequestBody UserUpdateDto userUpdateDto) {
         userUpdateDto.setId(id);
        userService.updateUser(userUpdateDto);
         return new ResponseEntity<>("update success", HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "{userID}")
+    @DeleteMapping(path = "/client/employee/{userID}")
     public ResponseEntity<String> deleteUser(@PathVariable("userID") Long id) {
         userService.deleteUser(id);
         return new ResponseEntity<>("User has been deleted",HttpStatus.OK);
     }
 
-    @PutMapping(path = "/updaterole")
+    @PutMapping(path = "client/employee/admin/updaterole")
     public ResponseEntity<String> updateRole(@Valid @RequestBody UserUpdateRoleDto userUpdateRoleDto) {
         userService.updateRole(userUpdateRoleDto);
         return new ResponseEntity<>("User Role has been updated!",HttpStatus.OK);

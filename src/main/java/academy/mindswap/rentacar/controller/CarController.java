@@ -26,21 +26,17 @@ public class CarController {
         this.carService = carService;
     }
 
-    @GetMapping("")
+    @GetMapping("/client/employee")
     public ResponseEntity<List<CarDto>> getCars() {
         return new ResponseEntity<>(carService.getAllCars(), HttpStatus.OK);
     }
 
-    @GetMapping(path = "{carID}")
+    @GetMapping(path = "/client/employee/{carID}")
     public ResponseEntity<CarDto> getCarById(@PathVariable("carID") Long id) {
         return new ResponseEntity<>(carService.getCarById(id), HttpStatus.OK);
     }
 
-
-
-
-
-    @PostMapping
+    @PostMapping(path = "/client/employee")
     public ResponseEntity<CarDto> createCar(@Valid @RequestBody CarDto carDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
 
@@ -55,7 +51,7 @@ public class CarController {
         return new ResponseEntity<>(carDto1, HttpStatus.CREATED);
     }
 
-    @PostMapping(path = "/createCars")
+    @PostMapping(path = "/client/employee/admin")
     public ResponseEntity<List<CarDto>> createCars(@Valid @RequestBody List<CarDto> carDtos, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
 
@@ -74,14 +70,14 @@ public class CarController {
 
 
 
-    @PutMapping(path = "{carId}")
+    @PutMapping(path = "/client/employee/{carId}")
     public  ResponseEntity<CarDto> updateCar(@PathVariable("carId") Long id, @RequestBody CarUpdateDto carUpdateDto) {
         carUpdateDto.setId(id);
       CarDto carDto =  carService.updateCar(carUpdateDto);
         return new ResponseEntity<>(carDto, HttpStatus.OK) ;
     }
 
-    @DeleteMapping(path = "{carID}")
+    @DeleteMapping(path = "/client/employee/{carID}")
     public ResponseEntity<String> deleteCar(@PathVariable("carID") Long id) {
         carService.deleteCar(id);
         return new ResponseEntity<>("Car has been removed",HttpStatus.OK);

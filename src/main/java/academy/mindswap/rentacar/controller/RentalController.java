@@ -26,7 +26,7 @@ public class RentalController {
     }
 
 
-    @PostMapping
+    @PostMapping(path = "/client/employee")
     public ResponseEntity<RentalDto> createRental( @RequestBody RentalDto rentalDto, BindingResult bindingResult) {
 
         if(bindingResult.hasErrors()) {
@@ -44,31 +44,30 @@ public class RentalController {
     }
 
 
-      @GetMapping("")
-        public ResponseEntity<List<RentalDto>> getRentals() {
-
+    @GetMapping(path = "/client/employee")
+    public ResponseEntity<List<RentalDto>> getRentals() {
         return new ResponseEntity<>(rentalService.getAllRentals(), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/available")
+    @GetMapping(path = "/client/employee/{rentalID}")
+    public ResponseEntity<RentalDto> getRentalById(@PathVariable("rentalID") Long id) {
+        return new ResponseEntity<>(rentalService.getRentalById(id), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/client/")
     public ResponseEntity<List<CarDto>> getAvailableCars() {
         List<CarDto> list = rentalService.getAvailableCars();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @GetMapping(path = "{rentalID}")
-    public ResponseEntity<RentalDto> getRentalById(@PathVariable("rentalID") Long id) {
-        return new ResponseEntity<>(rentalService.getRentalById(id), HttpStatus.OK);
-    }
-
-    @PutMapping(path = "{rentalID}")
+    @PutMapping(path = "/client/employee")
     public ResponseEntity<RentalDto> updateRental(@PathVariable("rentalID") Long id,  @RequestBody RentalDto rentalDto) {
         rentalDto.setId(id);
         RentalDto rentalDto1 =  rentalService.updateRental(rentalDto);
         return new ResponseEntity<>(rentalDto1, HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "{rentalID}")
+    @DeleteMapping(path = "/client/employee")
     public ResponseEntity<String> deleteRental(@PathVariable("rentalID") Long id) {
         rentalService.deleteRental(id);
         return new ResponseEntity<>("Rental has been deleted",HttpStatus.OK);

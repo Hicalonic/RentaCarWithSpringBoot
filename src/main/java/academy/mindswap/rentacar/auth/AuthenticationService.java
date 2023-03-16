@@ -29,7 +29,7 @@ public class AuthenticationService {
         .lastName(request.getLastname())
         .email(request.getEmail())
         .password(passwordEncoder.encode(request.getPassword()))
-        .role(Role.USER)
+        .role(Role.CLIENT)
         .build();
     var savedUser = this.userRepository.save(user);
     var jwtToken = jwtService.generateToken(user);
@@ -45,7 +45,7 @@ public class AuthenticationService {
             .lastName(request.getLastname())
             .email(request.getEmail())
             .password(passwordEncoder.encode(request.getPassword()))
-            .role(Role.USER)
+            .role(Role.ADMIN)
             .build();
     var savedUser = this.userRepository.save(user);
     var jwtToken = jwtService.generateAdminToken(user);
@@ -79,6 +79,7 @@ public class AuthenticationService {
         .tokenType(TokenType.BEARER)
         .expired(false)
         .revoked(false)
+        .role(user.getRole())
         .build();
     tokenRepository.save(token);
   }

@@ -1,7 +1,8 @@
 package academy.mindswap.rentacar.model;
 
 public enum Role {
-    USER("USER"),
+    EMPLOYEE("EMPLOYEE"),
+    CLIENT("CLIENT"),
     ADMIN("ADMIN");
 
     public final String value;

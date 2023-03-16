@@ -16,3 +16,5 @@ Before updateRole method call
 Response: org.springframework.dao.IncorrectResultSizeDataAccessException: query did not return a unique result: 2
 Before updateRole method call
 Response: org.springframework.dao.IncorrectResultSizeDataAccessException: query did not return a unique result: 2
+Before getUserByFirstName method call
+Response: java.lang.NullPointerException: Cannot invoke "academy.mindswap.rentacar.model.User.getId()" because "user" is null
