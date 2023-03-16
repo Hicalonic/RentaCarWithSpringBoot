@@ -93,7 +93,7 @@ public class UserController {
         return new ResponseEntity<>("User has been deleted",HttpStatus.OK);
     }
 
-    @PutMapping(path = "/updaterole")
+    @PutMapping(path = "/admin/updaterole")
     public ResponseEntity<String> updateUserRole(@Valid @RequestBody UserDtoUpdateRole userDtoUpdateRole) {
         System.out.println("User controller  - updateUserRole()");
         userService.updateRole(userDtoUpdateRole);

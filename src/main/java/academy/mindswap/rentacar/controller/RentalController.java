@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rental")
+
 public class RentalController {
 
 
@@ -44,13 +45,13 @@ public class RentalController {
     }
 
 
-      @GetMapping("")
+      @GetMapping("/client/getrentals")
         public ResponseEntity<List<RentalDto>> getRentals() {
 
         return new ResponseEntity<>(rentalService.getAllRentals(), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/available")
+    @GetMapping(path = "client/available")
     public ResponseEntity<List<CarDto>> getAvailableCars() {
         List<CarDto> list = rentalService.getAvailableCars();
         return new ResponseEntity<>(list, HttpStatus.OK);
