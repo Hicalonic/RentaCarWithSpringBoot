@@ -25,59 +25,32 @@ public class SecurityConfiguration {
   private final JwtAuthenticationFilter jwtAuthFilter;
   private final AuthenticationProvider authenticationProvider;
   private final LogoutHandler logoutHandler;
-/*
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http.csrf().disable()
-        .authorizeHttpRequests()
-            .requestMatchers("/user/admin/updaterole").hasAuthority("ADMIN")
-            .requestMatchers("/api/v1/auth/**").permitAll()
-            .anyRequest().authenticated()
-        .and()
-            .exceptionHandling()
-            .accessDeniedHandler((request, response, accessDeniedException) -> {
-                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                response.getWriter().write("You do not have permission to access this path, oh bro");
-            })
-        .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-            .authenticationProvider(authenticationProvider)
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-            .logout()
-            .logoutUrl("/api/v1/auth/logout")
-            .addLogoutHandler(logoutHandler)
-            .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext());
-    return http.build();
-  }
-
- */
-
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
+                //Admin has access to everything through localhost:8080/**
                 .requestMatchers("/**").hasAuthority("ADMIN")
 
+                //Employee has access to employee and client methods:
                 .requestMatchers("/user/employee/**").hasAuthority("EMPLOYEE")
-                .requestMatchers("/user/client/**").permitAll()
-
-                .requestMatchers("/rentals/client/**").hasAuthority("CLIENT")
                 .requestMatchers("/rentals/**").hasAuthority("EMPLOYEE")
-
-                .requestMatchers("/cars/client/**").hasAuthority("CLIENT")
                 .requestMatchers("/cars/**").hasAuthority("EMPLOYEE")
 
+                //client only has access to client methods:
+                .requestMatchers("/rentals/client/**").hasAuthority("CLIENT")
+                .requestMatchers("/cars/client/**").hasAuthority("CLIENT")
+
+                //Every type of user has access to this paths:
+                .requestMatchers("/user/client/**").permitAll()
                 .requestMatchers("/api/v1/auth/**").permitAll()
+
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler((request, response, accessDeniedException) -> {
                     response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                    response.getWriter().write("You do not have permission to access this path");
-                })
+                    response.getWriter().write("You do not have permission to access this path");})
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -91,6 +64,7 @@ public class SecurityConfiguration {
         return http.build();
     }
 }
+
 /*
 
 /user/client
