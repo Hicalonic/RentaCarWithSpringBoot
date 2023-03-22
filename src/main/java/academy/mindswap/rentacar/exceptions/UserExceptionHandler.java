@@ -1,5 +1,6 @@
-package academy.mindswap.rentacar.aspects;
+package academy.mindswap.rentacar.exceptions;
 
+import academy.mindswap.rentacar.aspects.LoggingAspect;
 import academy.mindswap.rentacar.exceptions.EmailException;
 import academy.mindswap.rentacar.exceptions.LicensePlateException;
 import org.slf4j.Logger;

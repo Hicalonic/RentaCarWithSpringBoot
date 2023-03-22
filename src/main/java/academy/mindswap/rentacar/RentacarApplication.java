@@ -8,8 +8,8 @@ public class RentacarApplication {
 
 	public static void main(String[] args) {
 
-
 	SpringApplication.run(RentacarApplication.class, args);
+
 	}
 
 }

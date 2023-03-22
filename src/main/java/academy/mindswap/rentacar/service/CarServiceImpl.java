@@ -20,7 +20,6 @@ public class CarServiceImpl implements CarService {
 
     private CarConverter carConverter;
     @Autowired
-
     public CarServiceImpl (CarRepository carRepository, CarConverter carConverter) {
         this.carRepository = carRepository;
         this.carConverter = carConverter;

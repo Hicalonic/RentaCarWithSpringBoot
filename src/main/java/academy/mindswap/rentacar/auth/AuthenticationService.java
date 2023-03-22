@@ -61,6 +61,7 @@ public class AuthenticationService {
         .user(user)
         .token(jwtToken)
         .tokenType(TokenType.BEARER)
+            .role(user.getRole())
         .expired(false)
         .revoked(false)
         .build();

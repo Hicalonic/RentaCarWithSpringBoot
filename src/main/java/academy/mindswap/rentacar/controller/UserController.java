@@ -7,6 +7,7 @@ import academy.mindswap.rentacar.dto.UserCreateDto;
 import academy.mindswap.rentacar.dto.UserDto;
 import academy.mindswap.rentacar.dto.UserDtoUpdateRole;
 import academy.mindswap.rentacar.dto.UserUpdateDto;
+import academy.mindswap.rentacar.model.Role;
 import academy.mindswap.rentacar.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +72,8 @@ public class UserController {
 
 
     @GetMapping(path = "{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id) {
+    public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id, @RequestHeader("role") Object tokenRole) {
+        System.out.println(tokenRole);
         return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
     }
 

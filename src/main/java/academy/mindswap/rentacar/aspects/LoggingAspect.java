@@ -23,7 +23,6 @@ public class LoggingAspect {
      */
     @Before("execution(* academy.mindswap.rentacar.controller.*.*(..))")
     public void checkUserBefore(JoinPoint joinPoint) {
-
         logger.info("Method " + joinPoint.getSignature().getName() + " has been called!");
     }
 

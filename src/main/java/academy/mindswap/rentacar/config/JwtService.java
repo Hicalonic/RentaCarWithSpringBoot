@@ -1,5 +1,6 @@
 package academy.mindswap.rentacar.config;
 
+import academy.mindswap.rentacar.model.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -39,6 +40,7 @@ public class JwtService {
     return Jwts
         .builder()
         .setClaims(extraClaims)
+            .claim("role", Role.USER.name())
         .setSubject(userDetails.getUsername())
         .setIssuedAt(new Date(System.currentTimeMillis()))
         .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))

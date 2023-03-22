@@ -1,6 +1,7 @@
 package academy.mindswap.rentacar.token;
 
 
+import academy.mindswap.rentacar.model.Role;
 import academy.mindswap.rentacar.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,4 +33,7 @@ public class Token {
   @ManyToOne
   @JoinColumn(name = "user_id")
   public User user;
+
+  @Enumerated(EnumType.STRING)
+  private Role role;
 }
